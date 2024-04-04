@@ -1,0 +1,27 @@
+fn is_prime(num: u64) -> bool {
+    if num <= 1 {
+        return false; 
+    }
+    
+    
+    let mut divisor = 2;
+    while divisor * divisor <= num {
+        if num % divisor == 0 {
+            return false; 
+        }
+        divisor += 1;
+    }
+    
+    true 
+}
+
+fn main() {
+    let test_cases = vec![2, 3, 7, 11, 15, 21, 29, 31];
+    for &num in test_cases.iter() {
+        if is_prime(num) {
+            println!("{} is a prime number", num);
+        } else {
+            println!("{} is not a prime number", num);
+        }
+    }
+}
