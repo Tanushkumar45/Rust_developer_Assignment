@@ -1,0 +1,42 @@
+fn partition(nums: &mut [i32], low: usize, high: usize) -> usize {
+    let pivot = nums[high];
+    let mut i = low;
+    
+    for j in low..high {
+        if nums[j] <= pivot {
+            nums.swap(i, j);
+            i += 1;
+        }
+    }
+    
+    nums.swap(i, high);
+    i
+}
+
+fn quickselect(nums: &mut [i32], low: usize, high: usize, k: usize) -> i32 {
+    let pivot_index = partition(nums, low, high);
+    
+    if pivot_index == k {
+        return nums[pivot_index];
+    } else if pivot_index < k {
+        return quickselect(nums, pivot_index + 1, high, k);
+    } else {
+        return quickselect(nums, low, pivot_index - 1, k);
+    }
+}
+
+fn kth_smallest(nums: &mut [i32], k: usize) -> i32 {
+    if k <= 0 || k > nums.len() {
+        panic!("Invalid value of k");
+    }
+    
+    quickselect(nums, 0, nums.len() - 1, k - 1)
+}
+
+fn main() {
+    let mut nums = vec![7, 10, 4, 3, 20, 15];
+    let k = 3;
+    
+    let kth_smallest = kth_smallest(&mut nums, k);
+    println!("The {}th smallest element is {}", k, kth_smallest);
+}
